@@ -1,0 +1,88 @@
+<!doctype html>
+<html ng-app="icloud">
+<head>
+	<meta charset="UTF-8">
+	<title>iCloud 提醒事项</title>
+	<script src="./js/angular.min.js"></script>
+	<script src="./js/icloud.js"></script>
+	<link rel="stylesheet" href="./css/icloud.css">
+</head>
+<body ng-controller="todolist">
+<div class="box">
+	<!-- 左侧 -->
+	<div class="left">
+		<!-- 左侧头部 -->
+		<div class="ltitle">
+			<div class="lt-left">
+				<div class="tixing">提醒事项</div>
+				<div class="xia-t"></div>
+				<div class="logo"></div>
+			</div>
+			<div class="lt-right">
+				<span ng-click="add()">+</span>
+			</div>
+		</div>
+		<!-- 左侧main -->
+		<div class="lmain">
+			<div class="jh">
+				<div class="nz"></div>
+				<div class="jh2">已计划</div>
+			</div>
+			<ul class="l-list">
+				<li ng-repeat="v in list track by $index" ng-class="{'active':v.id ==currentId}" n="{{v.id}}" ng-click="getInow(v.id)">
+					<div class="l-color">
+						<span ng-style="{'background':v.color}"></span>
+					</div>
+					<div class="l-t">{{v.title}}</div>
+				</li>
+			</ul>
+		</div>
+	</div>
+	<!-- 右侧 -->
+	<div class="right">
+		<!-- 右部的头部 -->
+		<div class="r-right">
+			<div class="search">
+				<div class="ss-tu">
+					<span></span>
+				</div>
+				<input type="text" placeholder="搜索所有提醒" ng-class="{'active':bg}" ng-focus="bg=true" ng-blur="bg=false">
+			</div>
+			<div class="r-ren">
+				<div class="role">
+					<span></span>
+				</div>
+			</div>
+		</div>
+		<!-- 右部main -->
+		<div class="r-list">
+			<div class="list-con">
+				<div class="r-t" ng-style="{'color':now.color}">
+					<h3>{{now.title}}</h3>
+					<div>选项</div>
+				</div>
+				<div class="r-com">
+					<div class="span"></div>
+					<li class="lis">已完成：</li>
+					<li ng-repeat="v in now.list | done:true">
+						<div class="span1">
+							<span ng-style="{'background-color':now.color,'border-color':now.color}" ng-click="v.done=false;change()"></span>
+						</div>
+						<input type="text" ng-model="v.title" ng-blur="change()">		
+					</li>
+				</div>
+				<div class="r-now">
+					<li ng-repeat="i in now.list | done:false" >
+						<div class="span1">
+							<span ng-click="i.done=true;change()" ng-style="{'background-color':rgba(0,0,0,0),'border-color':now.color}"></span>
+						</div>
+						<input type="text" ng-model="i.titel" ng-blur="change()">
+					</li>
+				</div>
+				<div class="new" ng-click="addlist()">新项目...</div>
+			</div>
+		</div>
+	</div>
+</div>
+</body>
+</html>
